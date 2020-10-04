@@ -47,7 +47,7 @@ public class DefectiveThread extends Thread {
         _threadName = threadName;
         _startIndex = startIndex;
         _endIndex = endIndex;
-        System.out.println("Creating Thread - " + _threadName + " " + _bulbArray.length); //TODO: remove _bulbArray.length
+        System.out.println("Creating Thread - " + _threadName);
     }
 
     /**
@@ -131,24 +131,31 @@ public class DefectiveThread extends Thread {
         int[] rightArray = Arrays.copyOfRange(bulbArray,pivot, length);
 
         /**
-         * Create a new DefectiveThread object for each sub-array. Call start(), which in turn calls
-         * the thread's run() method. This will recursively call FindDefective() on each half sub-array.
-         * Lock the _numOfThreads variable prior to each new object DefectiveThread object creation
+         * Create a new DefectiveThread object for each sub-array.
+         * Lock the _numOfThreads variables prior to each new object DefectiveThread object creation
          * in order to synchronize the count of the total number of threads between the active threads.
          */
         synchronized (_numOfThreadsCountLock) {
             _numOfThreads++;
         }
         DefectiveThread leftArrayThread = new DefectiveThread(leftArray, "#" + _numOfThreads, _startIndex, _startIndex+pivot-1);
-        leftArrayThread.start();
-        //leftArrayThread.join();
 
         synchronized (_numOfThreadsCountLock) {
             _numOfThreads++;
         }
         DefectiveThread rightArrayThread = new DefectiveThread(rightArray, "#" + _numOfThreads, _startIndex+pivot, _endIndex);
+
+        /**
+         * Call start(), which in turn calls the thread's run() method.
+         * This will recursively call FindDefective() on each half sub-array.
+         * Then call join() on each sub-array. This will wait for the new thread to return before continuing
+         * to the next line.
+         */
+        leftArrayThread.start();
         rightArrayThread.start();
-        //rightArrayThread.join();
+        rightArrayThread.join();
+        leftArrayThread.join();
+
     }
 
     /**

@@ -41,11 +41,9 @@ public class Program {
         defectiveThread.start();
 
         /**
-         * Puts the main thread temporarily to sleep to let the dynamically created threads complete their operations.
+         * Waits for the main thread to complete before continuing to the next line.
          */
-        //TODO: CHANGE THIS FOR SOMETHING MORE DYNAMIC (WAITS FOR ALL THREADS TO TERMINATE)
-        Thread.sleep(1000);
-//        defectiveThread.join();
+        defectiveThread.join();
 
         /**
          * Displays the total number of defective bulbs and the indices of the defectives from the original array.

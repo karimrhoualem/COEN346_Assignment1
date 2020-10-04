@@ -41,6 +41,7 @@ public class FileReader {
             sizeOfArray = Integer.parseInt(line);
             System.out.println("Reading inputs from " + srcFileName);
             System.out.println("Size of array: " + sizeOfArray);
+            System.out.println();
 
             /**
              * Ensure that the first integer of the array is a valid integer.
