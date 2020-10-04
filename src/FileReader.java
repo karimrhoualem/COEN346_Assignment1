@@ -1,3 +1,11 @@
+/**
+ * @author Karim Rhoualem
+ * @studentID 26603157
+ * @course COEN 346 - Programming Assignment #1
+ * @version 1.0.0.0
+ * @since 2020-10-03
+ */
+
 import java.io.*;
 
 /**
